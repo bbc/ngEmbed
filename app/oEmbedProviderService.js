@@ -50,7 +50,8 @@ function oEmbedProvider(name, type, urlschemesarray, apiendpoint, extraSettings)
 }
 
 
-function oEmbedProviderService() {
+function oEmbedProviderService(templateProviderService, yqlProviderService) {
+    var settings = {};
     var providers = [
 
         //Video
@@ -478,9 +479,9 @@ function oEmbedProviderService() {
                         if (!results['og:title'] && !results['title'])
                             return false;
 
-                        var code = $('<p/>');
+                        var code = angular.element('<p/>');
                         if (results['og:video']) {
-                            var embed = $('<embed src="' + results['og:video'] + '"/>');
+                            var embed = angular.element('<embed src="' + results['og:video'] + '"/>');
                             embed.attr('type', results['og:video:type'] || "application/x-shockwave-flash")
                                 .css('max-height', settings.maxHeight || 'auto')
                                 .css('max-width', settings.maxWidth || 'auto');
@@ -490,7 +491,7 @@ function oEmbedProviderService() {
                                 embed.attr('height', results['og:video:height']);
                             code.append(embed);
                         } else if (results['og:image']) {
-                            var img = $('<img src="' + results['og:image'] + '">');
+                            var img = angular.element('<img src="' + results['og:image'] + '">');
                             img.css('max-height', settings.maxHeight || 'auto').css('max-width', settings.maxWidth || 'auto');
                             if (results['og:image:width'])
                                 img.attr('width', results['og:image:width']);
@@ -512,12 +513,9 @@ function oEmbedProviderService() {
                 }
             }
         )];
-    function rand(length, current) { //Found on http://stackoverflow.com/questions/1349404/generate-a-string-of-5-random-characters-in-javascript
-        current = current ? current : '';
-        return length ? rand(--length, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz".charAt(Math.floor(Math.random() * 60)) + current) : current;
-    }
 
-    getOEmbedProvider = function (url) {
+
+    function getOEmbedProvider(url) {
         for (var i = 0; i < providers.length; i++) {
             for (var j = 0, l = providers[i].urlschemes.length; j < l; j++) {
                 var regExp = new RegExp(providers[i].urlschemes[j], "i");
@@ -528,44 +526,17 @@ function oEmbedProviderService() {
         }
     };
 
+
+
+
+
     getEmbedHTML = function(externalUrl, embedProvider) {
         var settings = {};
+        if (embedProvider.yql) {
+            return yqlProviderService.getEmbed(externalUrl, embedProvider, settings);
+        }
         if (embedProvider.templateRegex) {
-            console.log('sdfsdfsdfsdf');
-            if (embedProvider.embedtag.tag !== '') {
-                var flashvars = embedProvider.embedtag.flashvars || '';
-                var tag = embedProvider.embedtag.tag || 'embed';
-                var width = embedProvider.embedtag.width || 'auto';
-                var height = embedProvider.embedtag.height || 'auto';
-                var src = externalUrl.replace(embedProvider.templateRegex, embedProvider.apiendpoint);
-
-                if (!embedProvider.nocache) {
-                    src += '&jqoemcache=' + rand(5);
-                }
-
-                if (embedProvider.apikey) {
-                    src = src.replace('_APIKEY_', settings.apikeys[embedProvider.name]);
-                }
-
-                var code = angular.element('<' + tag + '/>').attr('src', src).attr('width', width)
-                    .attr('height', height)
-                    .attr('allowfullscreen', embedProvider.embedtag.allowfullscreen || 'true')
-                    .attr('allowscriptaccess', embedProvider.embedtag.allowfullscreen || 'always')
-                    .css('max-height', settings.maxHeight || 'auto')
-                    .css('max-width', settings.maxWidth || 'auto');
-
-                if (tag == 'embed') {
-                    code.attr('type', embedProvider.embedtag.type || "application/x-shockwave-flash")
-                        .attr('flashvars', externalUrl.replace(embedProvider.templateRegex, flashvars));
-                }
-
-                if (tag == 'iframe') {
-                    code.attr('scrolling', embedProvider.embedtag.scrolling || "no")
-                        .attr('frameborder', embedProvider.embedtag.frameborder || "0");
-
-                }
-                return code[0].outerHTML;
-            }
+            return templateProviderService.getEmbed(externalUrl, embedProvider, settings);
         }
     };
 
@@ -577,7 +548,7 @@ function oEmbedProviderService() {
 }
 
 
-app.service('oEmbedProviderService', [oEmbedProviderService]);
+app.service('oEmbedProviderService', ['templateProviderService', 'yqlProviderService', oEmbedProviderService]);
 
 
 
