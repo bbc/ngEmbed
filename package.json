@@ -1,0 +1,7 @@
+{
+  "name": "ngEmbed",
+  "version": "0.0.1",
+  "devDependencies": {
+    "karma-jasmine": "~0.3.5"
+  }
+}

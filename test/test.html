@@ -1,0 +1,30 @@
+<html>
+<head>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../app/app.js"></script>
+    <script src="../app/ngEmbed.js"></script>
+    <script src="../app/oEmbedProviderService.js"></script>
+
+    <script>
+        angular.module('test', ['ngEmbed']).controller('ctrl', ['$scope', function ($scope) {
+            $scope.urls = [
+                'http://vimeo.com/channels/staffpicks/118290158',
+                'https://flic.kr/p/q7E1Qg',
+                'https://audioboom.com/boos/2867762-katy-perry-s-lawyers-have-told-a-guy-to-stop-selling-left-shark-figurines',
+                'http://instagram.com/p/yVc_h3AswU',
+                'https://twitter.com/chrisloy/status/563099461082431491',
+                'http://www.bbc.co.uk/news/uk-31164451',
+                'https://vine.co/v/OHhMKX7Hd0q',
+                'https://www.youtube.com/watch?v=TWfph3iNC-k',
+                'https://www.facebook.com/officialgarylineker/posts/354204521404987'
+            ];
+        }])
+    </script>
+</head>
+
+<body ng-app="test" ng-controller="ctrl">
+<div ng-repeat="url in urls">
+    <ng-embed embed-url="{{url}}"></ng-embed>
+</div>
+</body>
+</html>
