@@ -50,7 +50,7 @@ function oEmbedProvider(name, type, urlschemesarray, apiendpoint, extraSettings)
 }
 
 
-function oEmbedProviderService(templateProviderService, yqlProviderService) {
+function oEmbedProviderService(templateProviderService, yqlProviderService, apiProviderService) {
     var settings = {};
     var providers = [
 
@@ -530,6 +530,7 @@ function oEmbedProviderService(templateProviderService, yqlProviderService) {
 
 
 
+
     getEmbedHTML = function(externalUrl, embedProvider) {
         var settings = {};
         if (embedProvider.yql) {
@@ -538,6 +539,10 @@ function oEmbedProviderService(templateProviderService, yqlProviderService) {
         if (embedProvider.templateRegex) {
             return templateProviderService.getEmbed(externalUrl, embedProvider, settings);
         }
+        return apiProviderService.getEmbed(externalUrl, embedProvider, settings);
+
+
+
     };
 
 
@@ -548,7 +553,7 @@ function oEmbedProviderService(templateProviderService, yqlProviderService) {
 }
 
 
-app.service('oEmbedProviderService', ['templateProviderService', 'yqlProviderService', oEmbedProviderService]);
+app.service('oEmbedProviderService', ['templateProviderService', 'yqlProviderService', 'apiProviderService', oEmbedProviderService]);
 
 
 

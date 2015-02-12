@@ -38,8 +38,25 @@ function TemplateProviderService(ProviderService, $q) {
                 }
 
                 deferred.resolve(code[0].outerHTML);
-                return deferred.promise;
             }
+            else if (embedProvider.apiendpoint) {
+                //Add APIkey if true
+                if (embedProvider.apikey)
+                    embedProvider.apiendpoint = embedProvider.apiendpoint.replace('_APIKEY_', settings.apikeys[embedProvider.name]);
+
+                ajaxopts = $.extend({
+                    url: externalUrl.replace(embedProvider.templateRegex, embedProvider.apiendpoint),
+                    dataType: 'jsonp',
+                    success: function (data) {
+                        var oembedData = $.extend({}, data);
+                        oembedData.code = embedProvider.templateData(data);
+                        success(oembedData, externalUrl, container);
+                    },
+                    error: settings.onError.call(container, externalUrl, embedProvider)
+                }, settings.ajaxOptions || {});
+                $.ajax(ajaxopts);
+            }
+            return deferred.promise;
         }.bind(this)();
     };
     return _service;

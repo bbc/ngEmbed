@@ -9,6 +9,7 @@ function ngEmbedController($scope, oEmbedProviderService) {
     $scope.$watch('embedUrl', function(newValue) {
         if(newValue) {
             var provider = oEmbedProviderService.getOEmbedProvider(newValue);
+            provider.params = {};
             oEmbedProviderService.getEmbedHTML(newValue, provider).then(function(html) {
                 $scope.embedHTML = html;
             });
@@ -28,7 +29,6 @@ function ngEmbed() {
             });
             scope.$watch('embedHTML', function(newValue) {
                 if(newValue) {
-                    console.log(newValue);
                     element.html(newValue);
                 }
             });
