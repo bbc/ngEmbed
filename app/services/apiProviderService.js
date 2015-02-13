@@ -30,7 +30,7 @@ function APIProviderService(ProviderService, $q) {
 
         url += "format=" + provider.format + "&url=" + escape(externalUrl) + qs;
         if (provider.dataType != 'json')
-            url += "&" + provider.callbackparameter + "=?";
+//            url += "&" + provider.callbackparameter + "=?";
 
         return url;
     }
@@ -77,12 +77,12 @@ function APIProviderService(ProviderService, $q) {
         return function () {
             var deferred = $q.defer();
             var requestUrl = getRequestUrl(embedProvider, externalUrl);
-
             this.$http.jsonp(requestUrl, {
                 params: {
                     callback: "JSON_CALLBACK"
                 }}).success(function (data) {
                 var oembedData = angular.copy(data);
+                console.log(oembedData);
                 switch (oembedData.type) {
                     case "file": //Deviant Art has this
                     case "photo":

@@ -51,6 +51,7 @@ function oEmbedProvider(name, type, urlschemesarray, apiendpoint, extraSettings)
 
 
 function oEmbedProviderService(templateProviderService, yqlProviderService, apiProviderService) {
+    var facebokScriptHasBeenAdded;
     var settings = {};
     var providers = [
 
@@ -342,13 +343,13 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
             , {templateRegex: /.*\/([^\/]+)\/([^\/]+).*/,
                 template: function (url) {
                     // adding script directly to DOM to make sure that it is loaded correctly.
-                    if (!$.fn.oembed.facebokScriptHasBeenAdded) {
-                        $('<div id="fb-root"></div>').appendTo('body');
+                    if (!facebokScriptHasBeenAdded) {
+                        document.body.appendChild(angular.element('<div id="fb-root"></div>')[0]);
                         var script = document.createElement('script');
                         script.type = 'text/javascript';
                         script.text = '(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js = d.createElement(s); js.id = id;js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";fjs.parentNode.insertBefore(js, fjs);}(document, "script", "facebook-jssdk"));';
                         document.body.appendChild(script);
-                        $.fn.oembed.facebokScriptHasBeenAdded = true;
+                        facebokScriptHasBeenAdded = true;
                     }
 
                     // returning template with url of facebook post.
@@ -537,8 +538,10 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
             return yqlProviderService.getEmbed(externalUrl, embedProvider, settings);
         }
         if (embedProvider.templateRegex) {
+            console.log('sfsdf')
             return templateProviderService.getEmbed(externalUrl, embedProvider, settings);
         }
+
         return apiProviderService.getEmbed(externalUrl, embedProvider, settings);
 
 

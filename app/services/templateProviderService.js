@@ -4,6 +4,7 @@ function TemplateProviderService(ProviderService, $q) {
     _service.getEmbed = function (externalUrl, embedProvider, settings) {
         return function () {
             var deferred = $q.defer();
+            console.log(embedProvider);
             if (embedProvider.embedtag.tag !== '') {
                 var flashvars = embedProvider.embedtag.flashvars || '';
                 var tag = embedProvider.embedtag.tag || 'embed';
@@ -55,6 +56,10 @@ function TemplateProviderService(ProviderService, $q) {
                     error: settings.onError.call(container, externalUrl, embedProvider)
                 }, settings.ajaxOptions || {});
                 $.ajax(ajaxopts);
+            }
+            else {
+                var html = externalUrl.replace(embedProvider.templateRegex, embedProvider.template);
+                deferred.resolve(html);
             }
             return deferred.promise;
         }.bind(this)();
