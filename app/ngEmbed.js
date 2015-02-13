@@ -2,17 +2,23 @@
 
 
 
-function ngEmbedController($scope, oEmbedProviderService) {
+function ngEmbedController($scope, oEmbedProviderService, longifyService) {
     $scope.embedUrl = '';
     $scope.embedHTML = '';
 
     $scope.$watch('embedUrl', function(newValue) {
         if(newValue) {
-            var provider = oEmbedProviderService.getOEmbedProvider(newValue);
-            provider.params = {};
-            oEmbedProviderService.getEmbedHTML(newValue, provider).then(function(html) {
-                $scope.embedHTML = html;
+            longifyService.longify(newValue).then(function(longUrl) {
+                var provider = oEmbedProviderService.getOEmbedProvider(longUrl);
+                provider.params = {};
+                oEmbedProviderService.getEmbedHTML(longUrl, provider).then(function(html) {
+                    $scope.embedHTML = html;
+                });
             });
+
+
+
+
         }
     });
 
@@ -36,7 +42,7 @@ function ngEmbed() {
     }
 }
 
-app.controller('ngEmbedController', ['$scope', 'oEmbedProviderService', ngEmbedController])
+app.controller('ngEmbedController', ['$scope', 'oEmbedProviderService', 'longifyService', ngEmbedController])
 app.directive('ngEmbed', [ngEmbed]);
 
 

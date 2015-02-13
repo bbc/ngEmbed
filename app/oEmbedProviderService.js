@@ -538,7 +538,6 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
             return yqlProviderService.getEmbed(externalUrl, embedProvider, settings);
         }
         if (embedProvider.templateRegex) {
-            console.log('sfsdf')
             return templateProviderService.getEmbed(externalUrl, embedProvider, settings);
         }
 
