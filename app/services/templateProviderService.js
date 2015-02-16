@@ -45,17 +45,15 @@ function TemplateProviderService(ProviderService, $q) {
                 if (embedProvider.apikey)
                     embedProvider.apiendpoint = embedProvider.apiendpoint.replace('_APIKEY_', settings.apikeys[embedProvider.name]);
 
-                ajaxopts = $.extend({
-                    url: externalUrl.replace(embedProvider.templateRegex, embedProvider.apiendpoint),
-                    dataType: 'jsonp',
-                    success: function (data) {
-                        var oembedData = $.extend({}, data);
-                        oembedData.code = embedProvider.templateData(data);
-                        success(oembedData, externalUrl, container);
-                    },
-                    error: settings.onError.call(container, externalUrl, embedProvider)
-                }, settings.ajaxOptions || {});
-                $.ajax(ajaxopts);
+                this.$http.jsonp(externalUrl.replace(embedProvider.templateRegex, embedProvider.apiendpoint), {
+                    params: {
+                        callback: 'JSON_CALLBACK'
+                    }
+                }).success(function(data) {
+                    deferred.resolve(embedProvider.templateData(data));
+                }).error(function(e) {
+                    deferred.reject(e);
+                });
             }
             else {
                 var html = externalUrl.replace(embedProvider.templateRegex, embedProvider.template);
