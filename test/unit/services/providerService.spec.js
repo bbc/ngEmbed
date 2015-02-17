@@ -1,8 +1,8 @@
 describe('BaseProviderService', function() {
     var baseService;
     beforeEach(module('ngEmbed'));
-    beforeEach(inject(function(providerService) {
-        baseService = providerService;
+    beforeEach(inject(function(baseServiceProvider) {
+        baseService = new baseServiceProvider();
     }));
 
    it('should have a getEmbed method', function() {

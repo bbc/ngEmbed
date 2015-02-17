@@ -608,7 +608,7 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
 }
 
 
-app.service('oEmbedProviderService', ['templateProviderService', 'yqlProviderService', 'apiProviderService', oEmbedProviderService]);
+app.service('oEmbedProviderService', ['templateServiceProvider', 'yqlServiceProvider', 'apiServiceProvider', oEmbedProviderService]);
 
 
 

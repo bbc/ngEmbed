@@ -1,5 +1,9 @@
-function LongifyService(ProviderService, $q) {
-    var _service = Object.create(ProviderService);
+function LongifyServiceProvider(BaseService, $q) {
+
+    function LongifyService() {
+        BaseService.call(this);
+    }
+    LongifyService.prototype = BaseService;
 
     var shortURLList = ["0rz.tw", "1link.in", "1url.com", "2.gp", "2big.at", "2tu.us", "3.ly", "307.to", "4ms.me", "4sq.com", "4url.cc", "6url.com", "7.ly", "a.gg", "a.nf", "aa.cx", "abcurl.net",
         "ad.vu", "adf.ly", "adjix.com", "afx.cc", "all.fuseurl.com", "alturl.com", "amzn.to", "ar.gy", "arst.ch", "atu.ca", "azc.cc", "b23.ru", "b2l.me", "bacn.me", "bcool.bz", "binged.it",
@@ -27,7 +31,7 @@ function LongifyService(ProviderService, $q) {
         "z0p.de", "zi.ma", "zi.mu", "zipmyurl.com", "zud.me", "zurl.ws", "zz.gd", "zzang.kr", "›.ws", "✩.ws", "✿.ws", "❥.ws", "➔.ws", "➞.ws", "➡.ws", "➨.ws", "➯.ws", "➹.ws", "➽.ws"];
 
 
-    _service.longify = function(resourceURL) {
+    LongifyService.prototype.longify = function(resourceURL) {
         return function() {
             var defer = $q.defer();
             var match = false;
@@ -61,7 +65,7 @@ function LongifyService(ProviderService, $q) {
     };
 
 
-    return _service;
+    return new LongifyService();
 }
 
-app.service('longifyService', ['providerService', '$q', LongifyService]);
+app.service('longifyServiceProvider', ['baseServiceProvider', '$q', LongifyServiceProvider]);

@@ -1,6 +1,8 @@
-function APIProviderService(ProviderService, $q) {
-
-    var _service = Object.create(ProviderService);
+function APIServiceProvider(BaseService, $q) {
+    function APIService() {
+        BaseService.call(this);
+    }
+    APIService.prototype = BaseService;
 
 
     function getRequestUrl(provider, externalUrl) {
@@ -74,7 +76,7 @@ function APIProviderService(ProviderService, $q) {
     };
 
 
-    _service.getEmbed = function (externalUrl, embedProvider, settings) {
+    APIService.prototype.getEmbed = function (externalUrl, embedProvider, settings) {
         return function () {
             var deferred = $q.defer();
             var requestUrl = getRequestUrl(embedProvider, externalUrl);
@@ -102,7 +104,7 @@ function APIProviderService(ProviderService, $q) {
             return deferred.promise;
         }.bind(this)();
     };
-    return _service;
+    return new APIService();
 };
 
 
@@ -112,4 +114,4 @@ function rand(length, current) { //Found on http://stackoverflow.com/questions/1
 }
 
 
-app.service('apiProviderService', ['providerService', '$q', APIProviderService]);
+app.service('apiServiceProvider', ['baseServiceProvider', '$q', APIServiceProvider]);

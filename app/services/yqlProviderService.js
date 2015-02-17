@@ -1,7 +1,9 @@
-function YQLProviderService(ProviderService, $q) {
-
-    var _service = Object.create(ProviderService);
-    _service.getEmbed = function (externalUrl, embedProvider, settings) {
+function YQLServiceProvider(BaseService, $q) {
+    function YQLService() {
+        BaseService.call(this);
+    }
+    YQLService.prototype = BaseService;
+    YQLService.prototype.getEmbed = function (externalUrl, embedProvider, settings) {
         return function() {
             var deferred = $q.defer();
             var from = embedProvider.yql.from || 'htmlstring';
@@ -67,11 +69,11 @@ function YQLProviderService(ProviderService, $q) {
         }.bind(this)();
     };
 
-    return _service;
+    return YQLService;
 }
 
 
 
 
 
-app.service('yqlProviderService', ['providerService', '$q', YQLProviderService]);
+app.service('yqlServiceProvider', ['baseServiceProvider', '$q', YQLServiceProvider]);
