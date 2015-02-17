@@ -57,7 +57,6 @@ function TemplateProviderService(ProviderService, $q) {
             }
             else {
                 var html = externalUrl.replace(embedProvider.templateRegex, embedProvider.template);
-                console.log(html);
                 deferred.resolve(html);
             }
             return deferred.promise;

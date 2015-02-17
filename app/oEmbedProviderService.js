@@ -514,7 +514,6 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
                         else if (results['description'])
                             code.append(results['description'] + '<br/>');
 
-                        console.log(code);
                         return code;
                     }
                 }
@@ -563,7 +562,6 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
                         else if (results['description'])
                             code.append(results['description'] + '<br/>');
 
-                        console.log(code);
                         return code;
                     }
                 }
@@ -589,7 +587,6 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
 
     getEmbedHTML = function(externalUrl, embedProvider) {
         var settings = {};
-        console.log(embedProvider);
         if (embedProvider.yql) {
             return yqlProviderService.getEmbed(externalUrl, embedProvider, settings);
         }

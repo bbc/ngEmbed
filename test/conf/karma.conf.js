@@ -6,10 +6,10 @@ module.exports = function (config) {
             'bower_components/angular/angular.js',
             'bower_components/angular-mocks/*.js',
             'app/**/*.js',
-            'test/unit/*.spec.js'
+            'test/unit/**/*.spec.js'
         ],
         autoWatch: true,
-        browsers: ['chrome'],
+        browsers: ['PhantomJS'],
         singleRun: false
     });
 };
