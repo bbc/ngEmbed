@@ -20,17 +20,17 @@
         angular.module('test', ['ngEmbed']).controller('ctrl', ['$scope', function ($scope) {
             $scope.urls = [
                 'http://vimeo.com/channels/staffpicks/118290158',
-                'https://flic.kr/p/q7E1Qg',
-                'https://audioboom.com/boos/2898804-gold-coaster-sue-lamb-found-10-million-dollars-in-her-bank-account',
-                'http://instagram.com/p/zIIsd0IVS4',
-                'https://twitter.com/chrisloy/status/563099461082431491',
-                'http://www.bbc.co.uk/news/uk-31164451',
-                'https://vine.co/v/OHhMKX7Hd0q',
-                'https://www.youtube.com/watch?v=TWfph3iNC-k',
-                'https://www.facebook.com/officialgarylineker/posts/354204521404987',
-                'http://www.touchcast.com/insidetracks/ad9fc3172b',   //touchcast
-                'https://soundcloud.com/zedsdead/zeds-dead-twin-shadow-lost-you-feat-dangelo-lacy',
-                'http://en.wikipedia.org/wiki/BBC'
+//                'https://flic.kr/p/q7E1Qg',
+//                'https://audioboom.com/boos/2898804-gold-coaster-sue-lamb-found-10-million-dollars-in-her-bank-account',
+//                'http://instagram.com/p/zIIsd0IVS4',
+//                'https://twitter.com/chrisloy/status/563099461082431491',
+//                'http://www.bbc.co.uk/news/uk-31164451',
+//                'https://vine.co/v/OHhMKX7Hd0q',
+//                'https://www.youtube.com/watch?v=TWfph3iNC-k',
+//                'https://www.facebook.com/officialgarylineker/posts/354204521404987',
+//                'http://www.touchcast.com/insidetracks/ad9fc3172b',   //touchcast
+//                'https://soundcloud.com/zedsdead/zeds-dead-twin-shadow-lost-you-feat-dangelo-lacy',
+//                'http://en.wikipedia.org/wiki/BBC'
             ];
         }])
     </script>
@@ -38,7 +38,10 @@
 
 <body ng-app="test" ng-controller="ctrl">
 <div ng-repeat="url in urls">
-    <ng-embed embed-url="{{url}}"></ng-embed>
+    <pre>
+        {{bob|json}}
+    </pre>
+    <ng-embed embed-url="{{url}}" ng-model="bob"></ng-embed>
 </div>
 
 <div id="bob"></div>
