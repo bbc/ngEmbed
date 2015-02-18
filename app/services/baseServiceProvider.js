@@ -1,10 +1,12 @@
 
+function BaseServiceProvider($http) {
 
-function ProviderService($http) {
-    this.$http = $http;
+    function BaseService() {
+        this.$http = $http;
+    }
+    BaseService.prototype.getEmbed = function() {};
+
+    return BaseService;
 }
-ProviderService.prototype.getEmbed = function() {};
 
-
-
-app.service('providerService', ['$http', ProviderService]);
+app.service('baseServiceProvider', ['$http', BaseServiceProvider]);
