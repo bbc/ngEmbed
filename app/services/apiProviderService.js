@@ -2,7 +2,7 @@ function APIServiceProvider(BaseService, $q) {
     function APIService() {
         BaseService.call(this);
     }
-    APIService.prototype = BaseService;
+    APIService.prototype = new BaseService;
 
 
     function getRequestUrl(provider, externalUrl) {
@@ -114,4 +114,4 @@ function rand(length, current) { //Found on http://stackoverflow.com/questions/1
 }
 
 
-app.service('apiServiceProvider', ['baseServiceProvider', '$q', APIServiceProvider]);
+app.factory('apiServiceProvider', ['baseServiceProvider', '$q', APIServiceProvider]);

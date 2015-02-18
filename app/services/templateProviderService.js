@@ -2,47 +2,12 @@ function TemplateServiceProvider(BaseService, $q) {
     function TemplateService() {
         BaseService.call(this);
     }
-    TemplateService.prototype = BaseService;
+
+    TemplateService.prototype = new BaseService;
     TemplateService.prototype.getEmbed = function (externalUrl, embedProvider, settings) {
         return function () {
             var deferred = $q.defer();
-
-            if (embedProvider.embedtag.tag !== '') {
-                var flashvars = embedProvider.embedtag.flashvars || '';
-                var tag = embedProvider.embedtag.tag || 'embed';
-                var width = embedProvider.embedtag.width || 'auto';
-                var height = embedProvider.embedtag.height || 'auto';
-                var src = externalUrl.replace(embedProvider.templateRegex, embedProvider.apiendpoint);
-
-                if (!embedProvider.nocache) {
-                    src += '&jqoemcache=' + rand(5);
-                }
-
-                if (embedProvider.apikey) {
-                    src = src.replace('_APIKEY_', settings.apikeys[embedProvider.name]);
-                }
-
-                var code = angular.element('<' + tag + '/>').attr('src', src).attr('width', width)
-                    .attr('height', height)
-                    .attr('allowfullscreen', embedProvider.embedtag.allowfullscreen || 'true')
-                    .attr('allowscriptaccess', embedProvider.embedtag.allowfullscreen || 'always')
-                    .css('max-height', settings.maxHeight || 'auto')
-                    .css('max-width', settings.maxWidth || 'auto');
-
-                if (tag == 'embed') {
-                    code.attr('type', embedProvider.embedtag.type || "application/x-shockwave-flash")
-                        .attr('flashvars', externalUrl.replace(embedProvider.templateRegex, flashvars));
-                }
-
-                if (tag == 'iframe') {
-                    code.attr('scrolling', embedProvider.embedtag.scrolling || "no")
-                        .attr('frameborder', embedProvider.embedtag.frameborder || "0");
-
-                }
-
-                deferred.resolve(code[0].outerHTML);
-            }
-            else if (embedProvider.apiendpoint) {
+            if (embedProvider.apiendpoint) {
                 //Add APIkey if true
                 if (embedProvider.apikey)
                     embedProvider.apiendpoint = embedProvider.apiendpoint.replace('_APIKEY_', settings.apikeys[embedProvider.name]);
@@ -51,9 +16,9 @@ function TemplateServiceProvider(BaseService, $q) {
                     params: {
                         callback: 'JSON_CALLBACK'
                     }
-                }).success(function(data) {
+                }).success(function (data) {
                     deferred.resolve(embedProvider.templateData(data));
-                }).error(function(e) {
+                }).error(function (e) {
                     deferred.reject(e);
                 });
             }
@@ -74,4 +39,4 @@ function rand(length, current) { //Found on http://stackoverflow.com/questions/1
 }
 
 
-app.service('templateServiceProvider', ['baseServiceProvider', '$q', TemplateServiceProvider]);
+app.factory('templateServiceProvider', ['baseServiceProvider', '$q', TemplateServiceProvider]);

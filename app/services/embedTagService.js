@@ -1,6 +1,7 @@
 function EmbedTagServiceProvider(BaseService, $q) {
+
     function EmbedTagService() {
-        BaseService.call(this);
+        BaseService.apply(this, arguments);
     }
     EmbedTagService.prototype = BaseService;
     EmbedTagService.prototype.getEmbed = function (externalUrl, embedProvider, settings) {

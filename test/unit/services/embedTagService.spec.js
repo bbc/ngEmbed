@@ -2,12 +2,14 @@
 
 
 describe('EmbedTagService', function () {
-    var baseService, embedTagService;
+    var embed, baseService, embedTagService, oEmbedProvider, oEmbedProviderService;
 
     beforeEach(module('ngEmbed'));
-    beforeEach(inject(function (baseServiceProvider, _embedTagService_) {
+    beforeEach(inject(function (baseServiceProvider, _embedTagService_, _oEmbedProvider_, _oEmbedProviderService_) {
         baseService = baseServiceProvider;
         embedTagService = _embedTagService_;
+        oEmbedProvider = _oEmbedProvider_;
+        oEmbedProviderService =_oEmbedProviderService_;
     }));
 
     it('should inherit from base service', function () {
@@ -16,5 +18,9 @@ describe('EmbedTagService', function () {
 
     it('should have a getEmbed method', function () {
         expect(embedTagService.getEmbed).toBeTruthy();
+    });
+
+    it('should', function() {
+
     });
 });

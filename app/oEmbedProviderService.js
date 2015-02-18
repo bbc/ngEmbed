@@ -1,56 +1,4 @@
-function oEmbedProvider(name, type, urlschemesarray, apiendpoint, extraSettings) {
-    this.name = name;
-    this.type = type; // "photo", "video", "link", "rich", null
-    this.urlschemes = urlschemesarray;
-    this.apiendpoint = apiendpoint;
-    this.maxWidth = 500;
-    this.maxHeight = 400;
-    extraSettings = extraSettings || {};
-
-    if (extraSettings.useYQL) {
-
-        if (extraSettings.useYQL == 'xml') {
-            extraSettings.yql = {
-                xpath: "//oembed/html",
-                from: 'xml',
-                apiendpoint: this.apiendpoint,
-                url: function (externalurl) {
-                    return this.apiendpoint + '?format=xml&url=' + externalurl
-                },
-                datareturn: function (results) {
-                    return results.html.replace(/.*\[CDATA\[(.*)\]\]>$/, '$1') || ''
-                }
-            };
-        } else {
-            extraSettings.yql = {
-                from: 'json',
-                apiendpoint: this.apiendpoint,
-                url: function (externalurl) {
-                    return this.apiendpoint + '?format=json&url=' + externalurl
-                },
-                datareturn: function (results) {
-                    if (results.json.type != 'video' && (results.json.url || results.json.thumbnail_url)) {
-                        return '<img src="' + (results.json.url || results.json.thumbnail_url) + '" />';
-                    }
-                    return results.json.html || ''
-                }
-            };
-        }
-        this.apiendpoint = null;
-    }
-
-
-    for (var property in extraSettings) {
-        this[property] = extraSettings[property];
-    }
-
-    this.format = this.format || 'json';
-    this.callbackparameter = this.callbackparameter || "callback";
-    this.embedtag = this.embedtag || {tag: ""};
-}
-
-
-function oEmbedProviderService(templateProviderService, yqlProviderService, apiProviderService) {
+function oEmbedProviderService(templateProviderService, yqlProviderService, apiProviderService, embedTagService, oEmbedProvider) {
     var facebokScriptHasBeenAdded;
     var settings = {};
     var providers = [
@@ -590,14 +538,16 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
         if (embedProvider.yql) {
             return yqlProviderService.getEmbed(externalUrl, embedProvider, settings);
         }
+
         if (embedProvider.templateRegex) {
-            return templateProviderService.getEmbed(externalUrl, embedProvider, settings);
+            if (embedProvider.embedtag.tag !== '') {
+                return embedTagService.getEmbed(externalUrl, embedProvider, settings);
+            }
+            else {
+                return templateProviderService.getEmbed(externalUrl, embedProvider, settings);
+            }
         }
-
         return apiProviderService.getEmbed(externalUrl, embedProvider, settings);
-
-
-
     };
 
 
@@ -608,7 +558,7 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
 }
 
 
-app.service('oEmbedProviderService', ['templateServiceProvider', 'yqlServiceProvider', 'apiServiceProvider', oEmbedProviderService]);
+app.service('oEmbedProviderService', ['templateServiceProvider', 'yqlServiceProvider', 'apiServiceProvider', 'embedTagService', 'oEmbedProvider', oEmbedProviderService]);
 
 
 
