@@ -3,16 +3,16 @@ describe('oEmbedProviderService', function () {
 
 
     beforeEach(module('ngEmbed'));
-    beforeEach(inject(function (baseServiceProvider, _embedTagService_, _oEmbedProvider_, _oEmbedProviderService_, _templateServiceProvider_, _yqlServiceProvider_, _apiServiceProvider_) {
-        baseService = baseServiceProvider;
+    beforeEach(inject(function (_baseService_, _embedTagService_, _oEmbedProvider_, _oEmbedProviderService_, _templateService_, _yqlService_, _apiService_) {
+        baseService = _baseService_;
         oEmbedProvider = _oEmbedProvider_;
         oEmbedProviderService = _oEmbedProviderService_;
 
 
         embedTagService = _embedTagService_;
-        templateService = _templateServiceProvider_;
-        yqlService = _yqlServiceProvider_;
-        apiService = _apiServiceProvider_;
+        templateService = _templateService_;
+        yqlService = _yqlService_;
+        apiService = _apiService_;
     }));
 
 

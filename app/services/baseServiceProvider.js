@@ -9,4 +9,4 @@ function BaseServiceProvider($http) {
     return BaseService;
 }
 
-app.service('baseServiceProvider', ['$http', BaseServiceProvider]);
+app.service('baseService', ['$http', BaseServiceProvider]);

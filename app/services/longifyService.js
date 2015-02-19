@@ -32,10 +32,12 @@ function LongifyServiceProvider(BaseService, $q) {
 
 
     LongifyService.prototype.longify = function(resourceURL) {
+
         return function() {
             var defer = $q.defer();
             var match = false;
             //Check if shorten URL
+
             for (var j = 0, l = shortURLList.length; j < l; j++) {
                 var regExp = new RegExp('://' + shortURLList[j] + '/', "i");
 
@@ -68,4 +70,4 @@ function LongifyServiceProvider(BaseService, $q) {
     return new LongifyService();
 }
 
-app.service('longifyServiceProvider', ['baseServiceProvider', '$q', LongifyServiceProvider]);
+app.service('longifyService', ['baseService', '$q', LongifyServiceProvider]);

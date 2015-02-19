@@ -46,4 +46,4 @@ function EmbedTagServiceProvider(BaseService, $q) {
     return new EmbedTagService();
 };
 
-app.service('embedTagService', ['baseServiceProvider', '$q', EmbedTagServiceProvider]);
+app.service('embedTagService', ['baseService', '$q', EmbedTagServiceProvider]);

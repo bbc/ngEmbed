@@ -114,4 +114,4 @@ function rand(length, current) { //Found on http://stackoverflow.com/questions/1
 }
 
 
-app.factory('apiServiceProvider', ['baseServiceProvider', '$q', APIServiceProvider]);
+app.factory('apiService', ['baseService', '$q', APIServiceProvider]);

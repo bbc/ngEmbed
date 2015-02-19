@@ -63,7 +63,7 @@ function ngEmbed() {
     }
 }
 
-app.controller('ngEmbedController', ['$scope', 'oEmbedProviderService', 'longifyServiceProvider', ngEmbedController]);
+app.controller('ngEmbedController', ['$scope', 'oEmbedProviderService', 'longifyService', ngEmbedController]);
 app.directive('ngEmbed', [ngEmbed]);
 
 

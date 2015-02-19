@@ -72,4 +72,4 @@ function YQLServiceProvider(BaseService, $q) {
     return new YQLService();
 }
 
-app.factory('yqlServiceProvider', ['baseServiceProvider', '$q', YQLServiceProvider]);
+app.factory('yqlService', ['baseService', '$q', YQLServiceProvider]);

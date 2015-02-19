@@ -39,4 +39,4 @@ function rand(length, current) { //Found on http://stackoverflow.com/questions/1
 }
 
 
-app.factory('templateServiceProvider', ['baseServiceProvider', '$q', TemplateServiceProvider]);
+app.factory('templateService', ['baseService', '$q', TemplateServiceProvider]);
