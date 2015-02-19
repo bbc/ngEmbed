@@ -1,7 +1,6 @@
-//'http://en.wikipedia.org/wiki/BBC'
-
-
 describe('EmbedTagService', function () {
+    'use strict';
+
     var embed, baseService, embedTagService, oEmbedProvider, oEmbedProviderService;
 
     beforeEach(module('ngEmbed'));

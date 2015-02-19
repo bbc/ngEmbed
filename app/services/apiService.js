@@ -1,4 +1,6 @@
 function APIServiceProvider(BaseService, $q) {
+    'use strict';
+
     function APIService() {
         BaseService.call(this);
     }
@@ -37,7 +39,7 @@ function APIServiceProvider(BaseService, $q) {
         return url;
     }
 
-    getPhotoCode = function (url, oembedData) {
+    var getPhotoCode = function (url, oembedData) {
         var code;
         var alt = oembedData.title ? oembedData.title : '';
         alt += oembedData.author_name ? ' - ' + oembedData.author_name : '';
@@ -60,11 +62,11 @@ function APIServiceProvider(BaseService, $q) {
         return code;
     };
 
-    getRichCode = function (url, oembedData) {
+    var getRichCode = function (url, oembedData) {
         return oembedData.html;
     };
 
-    getGenericCode = function (url, oembedData) {
+    var getGenericCode = function (url, oembedData) {
         var title = ((oembedData.title) && (oembedData.title !== null)) ? oembedData.title : url;
         var code = '<a href="' + url + '">' + title + '</a>';
 
@@ -76,7 +78,7 @@ function APIServiceProvider(BaseService, $q) {
     };
 
 
-    APIService.prototype.getEmbed = function (externalUrl, embedProvider, settings) {
+    APIService.prototype.getEmbed = function (externalUrl, embedProvider) {
         return function () {
             var deferred = $q.defer();
             var requestUrl = getRequestUrl(embedProvider, externalUrl);
@@ -105,7 +107,7 @@ function APIServiceProvider(BaseService, $q) {
         }.bind(this)();
     };
     return new APIService();
-};
+}
 
 
 function rand(length, current) { //Found on http://stackoverflow.com/questions/1349404/generate-a-string-of-5-random-characters-in-javascript

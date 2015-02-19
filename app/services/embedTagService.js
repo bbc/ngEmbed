@@ -1,4 +1,5 @@
 function EmbedTagServiceProvider(BaseService, $q) {
+    'use strict';
 
     function EmbedTagService() {
         BaseService.apply(this, arguments);
@@ -44,6 +45,6 @@ function EmbedTagServiceProvider(BaseService, $q) {
         }.bind(this)();
     };
     return new EmbedTagService();
-};
+}
 
 app.service('embedTagService', ['baseService', '$q', EmbedTagServiceProvider]);

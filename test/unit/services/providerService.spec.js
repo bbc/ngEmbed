@@ -1,4 +1,6 @@
 describe('BaseProviderService', function() {
+    'use strict';
+
     var baseService;
     beforeEach(module('ngEmbed'));
     beforeEach(inject(function(_baseService_) {

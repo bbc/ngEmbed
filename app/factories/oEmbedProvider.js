@@ -1,4 +1,6 @@
 function oEmbedProviderProvider() {
+    'use strict';
+
     function oEmbedProvider(name, type, urlschemesarray, apiendpoint, extraSettings) {
         this.name = name;
         this.type = type; // "photo", "video", "link", "rich", null
@@ -48,7 +50,7 @@ function oEmbedProviderProvider() {
         this.format = this.format || 'json';
         this.callbackparameter = this.callbackparameter || "callback";
         this.embedtag = this.embedtag || {tag: ""};
-    };
+    }
 
     return oEmbedProvider;
 }

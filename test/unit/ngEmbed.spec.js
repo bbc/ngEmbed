@@ -1,6 +1,6 @@
-
-
 describe('ngEmbed', function() {
+    'use strict';
+
     var scope, $rootScope, model, $httpBackend, element, $compile;
 
     beforeEach(module('ngEmbed'));

@@ -1,4 +1,6 @@
 function oEmbedProviderService(templateProviderService, yqlProviderService, apiProviderService, embedTagService, oEmbedProvider) {
+    'use strict';
+
     var facebokScriptHasBeenAdded;
     var settings = {};
     var providers = [
@@ -341,7 +343,7 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
                         + '</div><div class="oembedall-status"><strong>' + q.answer_count + '</strong>answer</div></div><div class="oembedall-views">' + q.view_count + ' view(s)</div></div>'
                         + '<div class="oembedall-summary"><h3><a class="oembedall-question-hyperlink" href="http://stackoverflow.com/questions/' + q.question_id + '/">' + q.title + '</a></h3>'
                         + '<div class="oembedall-excerpt">' + body.substring(0, 100) + '...</div><div class="oembedall-tags">';
-                    for (i in q.tags) {
+                    for (var i in q.tags) {
                         out += '<a title="" class="oembedall-post-tag" href="http://stackoverflow.com/questions/tagged/' + q.tags[i] + '">' + q.tags[i] + '</a>';
                     }
 
@@ -526,14 +528,14 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
                     return providers[i];
             }
         }
-    };
+    }
 
 
 
 
 
 
-    getEmbedHTML = function(externalUrl, embedProvider, settings) {
+    var getEmbedHTML = function(externalUrl, embedProvider, settings) {
         if (embedProvider.yql) {
             return yqlProviderService.getEmbed(externalUrl, embedProvider, settings);
         }

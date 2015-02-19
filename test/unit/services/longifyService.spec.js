@@ -1,4 +1,6 @@
 describe('EmbedTagService', function () {
+    'use strict';
+
     var $rootScope, baseService, longifyService, $httpBackend;
 
     beforeEach(module('ngEmbed'));

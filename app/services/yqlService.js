@@ -1,9 +1,11 @@
 function YQLServiceProvider(BaseService, $q) {
+    'use strict';
+
     function YQLService() {
         BaseService.call(this);
     }
     YQLService.prototype = new BaseService;
-    YQLService.prototype.getEmbed = function (externalUrl, embedProvider, settings) {
+    YQLService.prototype.getEmbed = function (externalUrl, embedProvider) {
         return function() {
             var deferred = $q.defer();
             var from = embedProvider.yql.from || 'htmlstring';

@@ -1,5 +1,6 @@
-
 describe('ngEmbedController', function() {
+    'use strict';
+
     var $scope, $q, dummyPromise, element, $controller, createController, oEmbedProviderServiceDummy;
 
     beforeEach(module('ngEmbed'));

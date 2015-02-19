@@ -1,4 +1,5 @@
 function LongifyServiceProvider(BaseService, $q) {
+    'use strict';
 
     function LongifyService() {
         BaseService.call(this);

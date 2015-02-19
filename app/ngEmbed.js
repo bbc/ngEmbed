@@ -1,4 +1,6 @@
 function ngEmbedController($scope, oEmbedProviderService, longifyService) {
+    'use strict';
+
     $scope.internalModel = {};
     $scope.embedUrl = '';
     $scope.embedHTML = '';
@@ -32,6 +34,8 @@ function ngEmbedController($scope, oEmbedProviderService, longifyService) {
 }
 
 function ngEmbed() {
+    'use strict';
+
     return {
         scope: {
             settings: '='

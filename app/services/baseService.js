@@ -1,5 +1,5 @@
-
 function BaseServiceProvider($http) {
+    'use strict';
 
     function BaseService() {
         this.$http = $http;

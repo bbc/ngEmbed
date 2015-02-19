@@ -1,4 +1,6 @@
 function TemplateServiceProvider(BaseService, $q) {
+    'use strict';
+
     function TemplateService() {
         BaseService.call(this);
     }
@@ -30,7 +32,7 @@ function TemplateServiceProvider(BaseService, $q) {
         }.bind(this)();
     };
     return new TemplateService();
-};
+}
 
 
 function rand(length, current) { //Found on http://stackoverflow.com/questions/1349404/generate-a-string-of-5-random-characters-in-javascript

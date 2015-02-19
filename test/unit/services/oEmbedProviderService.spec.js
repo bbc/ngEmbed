@@ -1,6 +1,7 @@
 describe('oEmbedProviderService', function () {
-    var embed, baseService, embedTagService, templateService, yqlService, apiService, oEmbedProvider, oEmbedProviderService;
+    'use strict';
 
+    var embed, baseService, embedTagService, templateService, yqlService, apiService, oEmbedProvider, oEmbedProviderService;
 
     beforeEach(module('ngEmbed'));
     beforeEach(inject(function (_baseService_, _embedTagService_, _oEmbedProvider_, _oEmbedProviderService_, _templateService_, _yqlService_, _apiService_) {
