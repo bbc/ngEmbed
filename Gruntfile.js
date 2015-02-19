@@ -8,5 +8,9 @@ module.exports = function (grunt) {
             }
         }});
 
+    grunt.registerTask('build', [
+        'concat'
+    ]);
+
     grunt.loadNpmTasks('grunt-contrib-concat');
 };
