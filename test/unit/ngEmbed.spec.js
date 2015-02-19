@@ -14,8 +14,6 @@ describe('ngEmbed', function() {
         $rootScope.$digest();
     }));
 
-
-
     describe('init', function() {
         it('should create the right model', function() {
             scope.model = {};
@@ -25,6 +23,28 @@ describe('ngEmbed', function() {
             expect(scope.model.longUrl).toBeTruthy();
             expect(scope.model.provider).toBeTruthy();
             expect(scope.model.html).toBeTruthy();
+        });
+
+        it('should assign general settings', function() {
+            scope.settings = {
+                'randomSetting': 'random'
+            };
+            element = $compile('<ng-embed embed-url="https://www.youtube.com/watch?v=TWfph3iNC-k" settings="settings"></ng-embed>')(scope);
+            element.isolateScope().$digest();
+            expect(element.isolateScope().settings.randomSetting).toEqual('random');
+        });
+
+        it('should assign provider settings', function() {
+            scope.settings = {
+                'youtube': {
+                    'randomString': 'random'
+                }
+            };
+            element = $compile('<ng-embed embed-url="https://www.youtube.com/watch?v=TWfph3iNC-k" settings="settings"></ng-embed>')(scope);
+            element.isolateScope().$digest();
+            expect(element.isolateScope().settings.randomSetting).toBeUndefined();
+            expect(element.isolateScope().provider.params['randomString']).toBeUndefined()
+            expect(element.isolateScope().provider.params['randomstring']).toEqual('random');
         });
     });
 

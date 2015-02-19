@@ -533,12 +533,10 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
 
 
 
-    getEmbedHTML = function(externalUrl, embedProvider) {
-        var settings = {};
+    getEmbedHTML = function(externalUrl, embedProvider, settings) {
         if (embedProvider.yql) {
             return yqlProviderService.getEmbed(externalUrl, embedProvider, settings);
         }
-
         if (embedProvider.templateRegex) {
             if (embedProvider.embedtag.tag !== '') {
                 return embedTagService.getEmbed(externalUrl, embedProvider, settings);
