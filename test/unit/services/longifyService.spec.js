@@ -1,10 +1,5 @@
-//'http://en.wikipedia.org/wiki/BBC'
-
-
 describe('EmbedTagService', function () {
-
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-    var $rootScope, embed, baseService, longifyService, $httpBackend;
+    var $rootScope, baseService, longifyService, $httpBackend;
 
     beforeEach(module('ngEmbed'));
     beforeEach(inject(function (_$rootScope_, _baseService_, _longifyService_, _$httpBackend_) {
