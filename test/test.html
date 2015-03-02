@@ -16,11 +16,17 @@
     <script src="../app/services/longifyService.js"></script>
     <script src="../app/services/oEmbedProviderService.js"></script>
 
-    <!--<script src="../dist/ngEmbed.build.js"></script>-->
+    <style>
+        iframe {
+            width:100%;
+        }
+    </style>
+
+    <!--<script src="../dist/ngEmbed.min.js"></script>-->
 
 
     <script>
-        angular.module('test', ['ngEmbed']).controller('ctrl', ['$scope', function ($scope) {
+        angular.module('test', ['ngEmbed']).controller('ctrl', ['$scope', '$timeout', function ($scope, $timeout) {
             $scope.urls = [
                 'http://vimeo.com/channels/staffpicks/118290158',
                 'https://flic.kr/p/q7E1Qg',
@@ -32,6 +38,9 @@
                 'https://www.youtube.com/watch?v=TWfph3iNC-k',
                 'https://www.facebook.com/officialgarylineker/posts/354204521404987',
                 'http://www.touchcast.com/insidetracks/ad9fc3172b',   //touchcast
+                'http://bbc-vip.touchcast.com/embed/19535',
+                'http://www.touchcast.com/e/54059',
+                'http://www.touchcast.com/insidetracks/inside_tracks_the_beach'
                 'https://soundcloud.com/zedsdead/zeds-dead-twin-shadow-lost-you-feat-dangelo-lacy',
                 'http://en.wikipedia.org/wiki/BBC'
             ];

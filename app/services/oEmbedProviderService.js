@@ -67,8 +67,7 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
         new oEmbedProvider("vine", "video", ["vine.co/v/.*"], null,
             {
                 templateRegex: /https?:\/\/w?w?w?.?vine\.co\/v\/([a-zA-Z0-9]*).*/,
-                template: '<iframe src="https://vine.co/v/$1/embed/postcard" width="600" height="600" allowfullscreen="true" allowscriptaccess="always" scrolling="no" frameborder="0"></iframe>' +
-                    '<script async src="//platform.vine.co/static/scripts/embed.js" charset="utf-8"></script>',
+                template: '<iframe src="https://vine.co/v/$1/embed/simple" width="600" height="600" allowfullscreen="true" allowscriptaccess="always" scrolling="no" frameborder="0"></iframe>',
                 nocache: 1
             }),
         new oEmbedProvider("boxofficebuz", "video", ["boxofficebuz\\.com\\/embed/.+"], "http://boxofficebuz.com/embed/$1/$2", {templateRegex: [/.*boxofficebuz\.com\/embed\/(\w+)\/([\w*\-*]+)/], embedtag: {tag: 'iframe', width: 480, height: 360 }}),
@@ -120,7 +119,14 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
         new oEmbedProvider("mobypicture", "photo", ["mobypicture.com/user/.+/view/.+", "moby.to/.+"], "http://api.mobypicture.com/oEmbed"),
         new oEmbedProvider("flickr", "photo", ["flickr\\.com/photos/.+"], "//flickr.com/services/oembed", {callbackparameter: 'jsoncallback'}),
         new oEmbedProvider("photobucket", "photo", ["photobucket\\.com/(albums|groups)/.+"], "http://photobucket.com/oembed/"),
-        new oEmbedProvider("instagram", "photo", ["instagr\\.?am(\\.com)?/.+"], "//api.instagram.com/oembed"),
+//        new oEmbedProvider("instagram", "photo", ["instagr\\.?am(\\.com)?/.+"], "//api.instagram.com/oembed"),
+        new oEmbedProvider("instagram", "photo", ["instagr\\.?am(\\.com)?/.+"], null,
+            {
+
+                templateRegex: /https?:\/\/w?w?w?.?instagram\.com\/p\/([a-zA-Z0-9]*).*/,
+                template: '<iframe src="https://instagram.com/p/$1/embed/?v=4" allowfullscreen="true" allowscriptaccess="always" scrolling="no" frameborder="0"></iframe>',
+                nocache: 1
+            }),
         //new oEmbedProvider("yfrog", "photo", ["yfrog\\.(com|ru|com\\.tr|it|fr|co\\.il|co\\.uk|com\\.pl|pl|eu|us)/.+"], "http://www.yfrog.com/api/oembed",{useYQL:"json"}),
         new oEmbedProvider("SmugMug", "photo", ["smugmug.com/[-.\\w@]+/.+"], "http://api.smugmug.com/services/oembed/"),
         new oEmbedProvider("dribbble", "photo", ["dribbble.com/shots/.+"], "http://api.dribbble.com/shots/$1?callback=?",
@@ -419,56 +425,15 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
 
 
 
+///http://bbc-vip.touchcast.com/embed/19497?skincolor=3888FF
 
-        new oEmbedProvider("touchcast", "rich", ["touchcast\\.com/.*"], null,
+
+        new oEmbedProvider("touchcast", "photo", ["touchcast\.com/.+"], null,
             {
-                yql: {
-                    xpath: "//meta|//title|//link",
-                    from: 'html',
-                    datareturn: function (results) {
-                        if (!results['og:title'] && results['title'] && results['description'])
-                            results['og:title'] = results['title'];
-
-                        if (!results['og:title'] && !results['title'])
-                            return false;
-
-                        var code = angular.element('<p/>');
-                        if (results['og:video']) {
-                            var embed = angular.element('<video controls></video>')
-                                .css('max-height', settings.maxHeight || 'auto')
-                                .css('max-width', settings.maxWidth || 'auto');
-                            var source = angular.element('<source src="' + results['og:video'] + '"/>');
-                            source.attr('type', results['og:video:type'] || "application/x-shockwave-flash");
-                            embed.append(source);
-
-                            if (results['og:video:width'])
-                                embed.attr('width', results['og:video:width']);
-                            if (results['og:video:height'])
-                                embed.attr('height', results['og:video:height']);
-                            code.append(embed);
-                        } else if (results['og:image']) {
-                            var img = angular.element('<img src="' + results['og:image'] + '">');
-                            img.css('max-height', settings.maxHeight || 'auto').css('max-width', settings.maxWidth || 'auto');
-                            if (results['og:image:width'])
-                                img.attr('width', results['og:image:width']);
-                            if (results['og:image:height'])
-                                img.attr('height', results['og:image:height']);
-                            code.append(img);
-                        }
-
-                        if (results['og:title'])
-                            code.append('<b>' + results['og:title'] + '</b><br/>');
-
-                        if (results['og:description'])
-                            code.append(results['og:description'] + '<br/>');
-                        else if (results['description'])
-                            code.append(results['description'] + '<br/>');
-
-                        return code;
-                    }
-                }
-            }
-        ),
+                templateRegex: /(.*)/,
+                template: '<iframe src="$1" allowfullscreen="true" allowscriptaccess="always" scrolling="no" frameborder="0"></iframe>',
+                nocache: 1
+            }),
         //Use Open Graph Where applicable
         new oEmbedProvider("opengraph", "rich", [".*"], null,
             {
