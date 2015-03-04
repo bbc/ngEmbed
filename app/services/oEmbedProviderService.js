@@ -424,16 +424,22 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
         new oEmbedProvider("ponga", "rich", ["ponga\\.com/.+"], "https://www.ponga.com/embedded?id=$1", {templateRegex: [/.*ponga\.com\/embedded\?id=(\w+).*/, /.*ponga\.com\/(\w+).*/], embedtag: {tag: 'iframe', width: 480, height: 360 }, nocache: 1}),
 
 
-
-///http://bbc-vip.touchcast.com/embed/19497?skincolor=3888FF
-
-
         new oEmbedProvider("touchcast", "photo", ["touchcast\.com/.+"], null,
-            {
-                templateRegex: /(.*)/,
-                template: '<iframe src="$1" allowfullscreen="true" allowscriptaccess="always" scrolling="no" frameborder="0"></iframe>',
-                nocache: 1
-            }),
+        {
+            templateRegex: /(.*)/,
+            template: '<iframe src="$1" allowfullscreen="true" allowscriptaccess="always" scrolling="no" frameborder="0"></iframe>',
+            nocache: 1
+        }),
+
+
+        //Use Open Graph Where applicable
+        new oEmbedProvider("audioboom", "rich", ["audioboom\.com\/.+"], null,
+        {
+            templateRegex: /(.*)/,
+            template: '<div class="ab-player" data-boourl="$1/embed/v2" data-iframestyle="background-color:transparent;"></div><script type="text/javascript">(function() { var po = document.createElement("script"); po.type = "text/javascript"; po.async = true; po.src = "https://d15mj6e6qmt1na.cloudfront.net/cdn/embed.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(po, s); })();</script>',
+            nocache: 1
+        }),
+
         //Use Open Graph Where applicable
         new oEmbedProvider("opengraph", "rich", [".*"], null,
             {
@@ -496,11 +502,7 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
     }
 
 
-
-
-
-
-    var getEmbedHTML = function(externalUrl, embedProvider, settings) {
+    var getEmbedHTML = function (externalUrl, embedProvider, settings) {
         if (embedProvider.yql) {
             return yqlProviderService.getEmbed(externalUrl, embedProvider, settings);
         }
