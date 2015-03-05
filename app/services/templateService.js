@@ -20,8 +20,13 @@ function TemplateServiceProvider(BaseService, $q) {
                     }
                 }).success(function (data) {
                     deferred.resolve(embedProvider.templateData(data));
-                }).error(function (e) {
-                    deferred.reject(e);
+                }).error(function (data, status, headers, config) {
+                    deferred.reject({
+                        data: data,
+                        status: status,
+                        headers: headers,
+                        config: config
+                    });
                 });
             }
             else {

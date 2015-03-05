@@ -20,21 +20,39 @@ function ngEmbedController($scope, oEmbedProviderService, longifyService) {
             $scope.internalModel.originalUrl = newValue;
             longifyService.longify(newValue).then(function (longUrl) {
                 $scope.provider = oEmbedProviderService.getOEmbedProvider(longUrl);
-                $scope.provider.params = getNormalizedParams($scope.embedSettings[$scope.provider.name]) || {};
 
-                if ($scope.embedSettings.onbeforeembed || $scope.provider.params.onbeforeembed) {
-                    var callback = $scope.embedSettings.onbeforeembed || $scope.provider.params.onbeforeembed;
-                    if (callback.call(this, longUrl, $scope.provider) === false) {
-                        return;
+                if ($scope.embedSettings.fallback === false) {
+                    $scope.provider = $scope.provider.name.toLowerCase() === 'opengraph' ? null : $scope.provider;
+                }
+
+                if($scope.provider) {
+                    $scope.provider.params = getNormalizedParams($scope.embedSettings[$scope.provider.name]) || {};
+
+                    if ($scope.embedSettings.onbeforeembed || $scope.provider.params.onbeforeembed) {
+                        var callback = $scope.embedSettings.onbeforeembed || $scope.provider.params.onbeforeembed;
+                        if (callback.call(this, longUrl, $scope.provider) === false) {
+                            return;
+                        }
+                    }
+
+                    oEmbedProviderService.getEmbedHTML(longUrl, $scope.provider, $scope.embedSettings).then(function (html) {
+                        $scope.embedHTML = html;
+                        $scope.internalModel.longUrl = longUrl;
+                        $scope.internalModel.provider = $scope.provider;
+                        $scope.internalModel.html = html;
+                    }, function(params) {
+                        if($scope.embedSettings.onerror || $scope.provider.params.onerror) {
+                            var callback = $scope.embedSettings.onerror || $scope.provider.params.onerror;
+                            callback.call(this, params);
+                        }
+                    });
+                }
+                else {
+                    if ($scope.embedSettings.onnotsupported) {
+                        $scope.embedSettings.onnotsupported.call(this, longUrl);
                     }
                 }
 
-                oEmbedProviderService.getEmbedHTML(longUrl, $scope.provider, $scope.embedSettings).then(function (html) {
-                    $scope.embedHTML = html;
-                    $scope.internalModel.longUrl = longUrl;
-                    $scope.internalModel.provider = $scope.provider;
-                    $scope.internalModel.html = html;
-                });
             });
         }
     });

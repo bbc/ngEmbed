@@ -32,9 +32,9 @@ function LongifyServiceProvider(BaseService, $q) {
         "z0p.de", "zi.ma", "zi.mu", "zipmyurl.com", "zud.me", "zurl.ws", "zz.gd", "zzang.kr", "›.ws", "✩.ws", "✿.ws", "❥.ws", "➔.ws", "➞.ws", "➡.ws", "➨.ws", "➯.ws", "➹.ws", "➽.ws"];
 
 
-    LongifyService.prototype.longify = function(resourceURL) {
+    LongifyService.prototype.longify = function (resourceURL) {
 
-        return function() {
+        return function () {
             var defer = $q.defer();
             var match = false;
             //Check if shorten URL
@@ -52,15 +52,20 @@ function LongifyServiceProvider(BaseService, $q) {
                             url: resourceURL,
                             format: "json"
                         }
-                    }).success(function(data) {
+                    }).success(function (data) {
                         defer.resolve(data['long-url']);
-                    }).error(function(e) {
-                        defer.reject(e);
+                    }).error(function (data, status, headers, config) {
+                        defer.reject({
+                            data: data,
+                            status: status,
+                            headers: headers,
+                            config: config
+                        });
                     });
                 }
             }
 
-            if(!match) {
+            if (!match) {
                 defer.resolve(resourceURL);
             }
             return defer.promise;

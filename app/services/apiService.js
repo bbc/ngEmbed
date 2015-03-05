@@ -102,6 +102,13 @@ function APIServiceProvider(BaseService, $q) {
                         break;
                 }
                 deferred.resolve(oembedData.code);
+            }).error(function(data, status, headers, config) {
+                deferred.reject({
+                    data: data,
+                    status: status,
+                    headers: headers,
+                    config: config
+                });
             });
             return deferred.promise;
         }.bind(this)();
