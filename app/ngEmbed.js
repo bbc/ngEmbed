@@ -21,6 +21,14 @@ function ngEmbedController($scope, oEmbedProviderService, longifyService) {
             longifyService.longify(newValue).then(function (longUrl) {
                 $scope.provider = oEmbedProviderService.getOEmbedProvider(longUrl);
                 $scope.provider.params = getNormalizedParams($scope.embedSettings[$scope.provider.name]) || {};
+
+                if ($scope.embedSettings.onbeforeembed || $scope.provider.params.onbeforeembed) {
+                    var callback = $scope.embedSettings.onbeforeembed || $scope.provider.params.onbeforeembed;
+                    if (callback.call(this, longUrl, $scope.provider) === false) {
+                        return;
+                    }
+                }
+
                 oEmbedProviderService.getEmbedHTML(longUrl, $scope.provider, $scope.embedSettings).then(function (html) {
                     $scope.embedHTML = html;
                     $scope.internalModel.longUrl = longUrl;
@@ -48,7 +56,7 @@ function ngEmbed() {
                 scope.embedUrl = value;
             });
             scope.$watch('settings', function (value) {
-                if(value) {
+                if (value) {
                     scope.embedSettings = value;
                 }
             });
