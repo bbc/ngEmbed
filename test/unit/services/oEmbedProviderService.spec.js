@@ -47,7 +47,7 @@ describe('oEmbedProviderService', function () {
         oEmbedProviderService.getEmbedHTML('testurl', embed);
         expect(yqlService.getEmbed).toHaveBeenCalled();
 
-        /********yql********/
+        /********api********/
         embed = new oEmbedProvider("vimeo", "video", ["www\.vimeo\.com\/groups\/.*\/videos\/.*", "www\.vimeo\.com\/.*", "vimeo\.com\/groups\/.*\/videos\/.*", "vimeo\.com\/.*"], "//vimeo.com/api/oembed.json"),
         spyOn(apiService, 'getEmbed');
         oEmbedProviderService.getEmbedHTML('testurl', embed);

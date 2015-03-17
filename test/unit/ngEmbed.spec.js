@@ -10,8 +10,6 @@ describe('ngEmbed', function() {
         $httpBackend = _$httpBackend_;
         scope = $rootScope.$new();
         $compile = _$compile_;
-        element = $compile('<ng-embed ng-model="model"></ng-embed>')(scope);
-        $rootScope.$digest();
     }));
 
     describe('init', function() {
@@ -23,6 +21,7 @@ describe('ngEmbed', function() {
             expect(scope.model.longUrl).toBeTruthy();
             expect(scope.model.provider).toBeTruthy();
             expect(scope.model.html).toBeTruthy();
+            expect(scope.model.provider.name).toEqual('youtube');
         });
 
         it('should assign general settings', function() {
@@ -46,6 +45,18 @@ describe('ngEmbed', function() {
             expect(element.isolateScope().provider.params['randomString']).toBeUndefined()
             expect(element.isolateScope().provider.params['randomstring']).toEqual('random');
         });
+
+        it('should create the right model', function() {
+            scope.model = {};
+            element = $compile('<ng-embed ng-model="model" embed-url="https://vine.co/v/OHhMKX7Hd0q"></ng-embed>')(scope);
+            element.isolateScope().$digest();
+            expect(scope.model.originalUrl).toBeTruthy();
+            expect(scope.model.longUrl).toBeTruthy();
+            expect(scope.model.provider).toBeTruthy();
+            expect(scope.model.html).toBeTruthy();
+            expect(scope.model.provider.name).toEqual('vine');
+        });
+
     });
 
 });
