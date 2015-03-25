@@ -6,7 +6,7 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
     var providers = [
 
         //Video
-        new oEmbedProvider("youtube", "video", ["youtube\\.com/watch.+v=[\\w-]+&?", "youtu\\.be/[\\w-]+", "youtube.com/embed"], 'http://www.youtube.com/embed/$1?wmode=transparent', {
+        new oEmbedProvider("youtube", "video", ["youtube\\.com/watch.+v=[\\w-]+&?", "youtu\\.be/[\\w-]+", "youtube.com/embed"], 'https://www.youtube.com/embed/$1?wmode=transparent', {
             templateRegex: /.*(?:v\=|be\/|embed\/)([\w\-]+)&?.*/, embedtag: {tag: 'iframe', width: '425', height: '349'}
         }),
 
@@ -122,9 +122,11 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
 //        new oEmbedProvider("instagram", "photo", ["instagr\\.?am(\\.com)?/.+"], "//api.instagram.com/oembed"),
         new oEmbedProvider("instagram", "photo", ["instagr\\.?am(\\.com)?/.+"], null,
             {
-
-                templateRegex: /https?:\/\/w?w?w?.?instagram\.com\/p\/([a-zA-Z0-9]*).*/,
-                template: '<iframe src="https://instagram.com/p/$1/embed/?v=4" allowfullscreen="true" allowscriptaccess="always" scrolling="no" frameborder="0"></iframe>',
+                templateRegex: /https?:\/\/w?w?w?.?instagram\.com\/p\/(.*)/,
+                template: function (url, param) {
+                    param = param.match(/^([^?\/?]+)/)[1];
+                    return '<iframe src="https://instagram.com/p/'+param+'/embed/?v=4" allowfullscreen="true" allowscriptaccess="always" scrolling="no" frameborder="0"></iframe>'
+                },
                 nocache: 1
             }),
         //new oEmbedProvider("yfrog", "photo", ["yfrog\\.(com|ru|com\\.tr|it|fr|co\\.il|co\\.uk|com\\.pl|pl|eu|us)/.+"], "http://www.yfrog.com/api/oembed",{useYQL:"json"}),
