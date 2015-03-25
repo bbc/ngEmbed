@@ -32,7 +32,7 @@ function LongifyServiceProvider(BaseService, $q) {
         "z0p.de", "zi.ma", "zi.mu", "zipmyurl.com", "zud.me", "zurl.ws", "zz.gd", "zzang.kr", "›.ws", "✩.ws", "✿.ws", "❥.ws", "➔.ws", "➞.ws", "➡.ws", "➨.ws", "➯.ws", "➹.ws", "➽.ws"];
 
 
-    LongifyService.prototype.longify = function (resourceURL) {
+    LongifyService.prototype.longify = function (resourceURL, settings) {
 
         return function () {
             var defer = $q.defer();
@@ -46,22 +46,27 @@ function LongifyServiceProvider(BaseService, $q) {
                     match = true;
                     //AJAX to http://api.longurl.org/v2/expand?url=http://bit.ly/JATvIs&format=json&callback=hhh
 
-                    this.$http.jsonp('http://api.longurl.org/v2/expand', {
-                        params: {
-                            callback: "JSON_CALLBACK",
-                            url: resourceURL,
-                            format: "json"
-                        }
-                    }).success(function (data) {
-                        defer.resolve(data['long-url']);
-                    }).error(function (data, status, headers, config) {
-                        defer.reject({
-                            data: data,
-                            status: status,
-                            headers: headers,
-                            config: config
+                    if(settings.longify && settings.longify.useCustomService) {
+                        return settings.longify.useCustomService.call(this, resourceURL, defer);
+                    }
+                    else {
+                        this.$http.jsonp('http://api.longurl.org/v2/expand', {
+                            params: {
+                                callback: "JSON_CALLBACK",
+                                url: resourceURL,
+                                format: "json"
+                            }
+                        }).success(function (data) {
+                            defer.resolve(data['long-url']);
+                        }).error(function (data, status, headers, config) {
+                            defer.reject({
+                                data: data,
+                                status: status,
+                                headers: headers,
+                                config: config
+                            });
                         });
-                    });
+                    }
                 }
             }
 

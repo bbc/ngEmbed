@@ -44,15 +44,15 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
             {templateRegex: /.*view\/(.+)\//, embedtag: {width: 480, height: 400}, nocache: 1 }),
         new oEmbedProvider("embedr", "video", ["embedr\\.com/playlist/.+"], "http://embedr.com/swf/slider/$1/425/520/default/false/std?",
             {templateRegex: /.*playlist\/([^\/]+).*/, embedtag: {width: 425, height: 520}}),
-        new oEmbedProvider("blip", "video", ["blip\\.tv/.+"], "//blip.tv/oembed/"),
+        new oEmbedProvider("blip", "video", ["blip\\.tv/.+"], "https://blip.tv/oembed/"),
         new oEmbedProvider("minoto-video", "video", ["http://api.minoto-video.com/publishers/.+/videos/.+", "http://dashboard.minoto-video.com/main/video/details/.+", "http://embed.minoto-video.com/.+"], "http://api.minoto-video.com/services/oembed.json", {useYQL: 'json'}),
         new oEmbedProvider("animoto", "video", ["animoto.com/play/.+"], "http://animoto.com/services/oembed"),
-        new oEmbedProvider("hulu", "video", ["hulu\\.com/watch/.*"], "//www.hulu.com/api/oembed.json"),
+        new oEmbedProvider("hulu", "video", ["hulu\\.com/watch/.*"], "https://www.hulu.com/api/oembed.json"),
         new oEmbedProvider("ustream", "video", ["ustream\\.tv/recorded/.*"], "http://www.ustream.tv/oembed", {useYQL: 'json'}),
         new oEmbedProvider("videojug", "video", ["videojug\\.com/(film|payer|interview).*"], "http://www.videojug.com/oembed.json", {useYQL: 'json'}),
         new oEmbedProvider("sapo", "video", ["videos\\.sapo\\.pt/.*"], "http://videos.sapo.pt/oembed", {useYQL: 'json'}),
         new oEmbedProvider("vodpod", "video", ["vodpod.com/watch/.*"], "http://vodpod.com/oembed.js", {useYQL: 'json'}),
-        new oEmbedProvider("vimeo", "video", ["www\.vimeo\.com\/groups\/.*\/videos\/.*", "www\.vimeo\.com\/.*", "vimeo\.com\/groups\/.*\/videos\/.*", "vimeo\.com\/.*"], "//vimeo.com/api/oembed.json"),
+        new oEmbedProvider("vimeo", "video", ["www\.vimeo\.com\/groups\/.*\/videos\/.*", "www\.vimeo\.com\/.*", "vimeo\.com\/groups\/.*\/videos\/.*", "vimeo\.com\/.*"], "https:////vimeo.com/api/oembed.json"),
         new oEmbedProvider("dailymotion", "video", ["dailymotion\\.com/.+"], '//www.dailymotion.com/services/oembed'),
         new oEmbedProvider("5min", "video", ["www\\.5min\\.com/.+"], 'http://api.5min.com/oembed.xml', {useYQL: 'xml'}),
         new oEmbedProvider("National Film Board of Canada", "video", ["nfb\\.ca/film/.+"], 'http://www.nfb.ca/remote/services/oembed/', {useYQL: 'json'}),
@@ -89,11 +89,11 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
         new oEmbedProvider("shoudio", "rich", ["shoudio.com/.+", "shoud.io/.+"], "http://shoudio.com/api/oembed"),
         new oEmbedProvider("mixcloud", "rich", ["mixcloud.com/.+"], 'http://www.mixcloud.com/oembed/', {useYQL: 'json'}),
         new oEmbedProvider("rdio.com", "rich", ["rd.io/.+", "rdio.com"], "http://www.rdio.com/api/oembed/"),
-        new oEmbedProvider("Soundcloud", "rich", ["soundcloud.com/.+", "snd.sc/.+"], "//soundcloud.com/oembed", {format: 'js'}),
+        new oEmbedProvider("Soundcloud", "rich", ["soundcloud.com/.+", "snd.sc/.+"], "https://soundcloud.com/oembed", {format: 'js'}),
         new oEmbedProvider("bandcamp", "rich", ["bandcamp\\.com/album/.+"], null,
             {
                 yql: {
-                    xpath: "//meta[contains(@content, \\'EmbeddedPlayer\\')]",
+                    xpath: "https://meta[contains(@content, \\'EmbeddedPlayer\\')]",
                     from: 'html',
                     datareturn: function (results) {
                         return results.meta ? '<iframe width="400" height="100" src="' + results.meta.content + '" allowtransparency="true" frameborder="0"></iframe>' : false;
@@ -102,7 +102,7 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
             }),
 
         //Photo
-        new oEmbedProvider("deviantart", "photo", ["deviantart.com/.+", "fav.me/.+", "deviantart.com/.+"], "//backend.deviantart.com/oembed", {format: 'jsonp'}),
+        new oEmbedProvider("deviantart", "photo", ["deviantart.com/.+", "fav.me/.+", "deviantart.com/.+"], "https://backend.deviantart.com/oembed", {format: 'jsonp'}),
         new oEmbedProvider("skitch", "photo", ["skitch.com/.+"], null,
             {
                 yql: {
@@ -117,9 +117,9 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
                 }
             }),
         new oEmbedProvider("mobypicture", "photo", ["mobypicture.com/user/.+/view/.+", "moby.to/.+"], "http://api.mobypicture.com/oEmbed"),
-        new oEmbedProvider("flickr", "photo", ["flickr\\.com/photos/.+"], "//flickr.com/services/oembed", {callbackparameter: 'jsoncallback'}),
+        new oEmbedProvider("flickr", "photo", ["flickr\\.com/photos/.+"], "https://flickr.com/services/oembed", {callbackparameter: 'jsoncallback'}),
         new oEmbedProvider("photobucket", "photo", ["photobucket\\.com/(albums|groups)/.+"], "http://photobucket.com/oembed/"),
-//        new oEmbedProvider("instagram", "photo", ["instagr\\.?am(\\.com)?/.+"], "//api.instagram.com/oembed"),
+//        new oEmbedProvider("instagram", "photo", ["instagr\\.?am(\\.com)?/.+"], "https://api.instagram.com/oembed"),
         new oEmbedProvider("instagram", "photo", ["instagr\\.?am(\\.com)?/.+"], null,
             {
                 templateRegex: /https?:\/\/w?w?w?.?instagram\.com\/p\/(.*)/,
@@ -148,7 +148,7 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
         new oEmbedProvider("circuitlab", "photo", ["circuitlab.com/circuit/.+"], "https://www.circuitlab.com/circuit/$1/screenshot/540x405/",
             {templateRegex: /.*circuit\/([^\/]+).*/, embedtag: {tag: 'img'}, nocache: 1}),
         new oEmbedProvider("23hq", "photo", ["23hq.com/[-.\\w@]+/photo/.+"], "http://www.23hq.com/23/oembed", {useYQL: "json"}),
-        new oEmbedProvider("img.ly", "photo", ["img\\.ly/.+"], "//img.ly/show/thumb/$1",
+        new oEmbedProvider("img.ly", "photo", ["img\\.ly/.+"], "https://img.ly/show/thumb/$1",
             {templateRegex: /.*ly\/([^\/]+).*/, embedtag: {tag: 'img'}, nocache: 1}),
         new oEmbedProvider("twitgoo.com", "photo", ["twitgoo\\.com/.+"], "http://twitgoo.com/show/thumb/$1",
             {templateRegex: /.*com\/([^\/]+).*/, embedtag: {tag: 'img'}, nocache: 1}),
@@ -157,7 +157,7 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
         new oEmbedProvider("visual.ly", "rich", ["visual\\.ly/.+"], null,
             {
                 yql: {
-                    xpath: "//a[@id=\\'gc_article_graphic_image\\']/img",
+                    xpath: "https://a[@id=\\'gc_article_graphic_image\\']/img",
                     from: 'htmlstring'
                 }
             }),
@@ -200,7 +200,7 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
                 }
             }),
 
-        new oEmbedProvider("prezi", "rich", ["prezi.com/.*"], "//prezi.com/bin/preziloader.swf?",
+        new oEmbedProvider("prezi", "rich", ["prezi.com/.*"], "https://prezi.com/bin/preziloader.swf?",
             {
                 templateRegex: /.*com\/([^\/]+)\/.*/,
                 embedtag: {
@@ -305,7 +305,7 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
                         document.body.appendChild(angular.element('<div id="fb-root"></div>')[0]);
                         var script = document.createElement('script');
                         script.type = 'text/javascript';
-                        script.text = '(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js = d.createElement(s); js.id = id;js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";fjs.parentNode.insertBefore(js, fjs);}(document, "script", "facebook-jssdk"));';
+                        script.text = '(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js = d.createElement(s); js.id = id;js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";fjs.parentNode.insertBefore(js, fjs);}(document, "script", "facebook-jssdk"));';
                         document.body.appendChild(script);
                         facebokScriptHasBeenAdded = true;
                     }
@@ -380,7 +380,7 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
                     width: '120px',
                     height: '240px'}
             }),
-        new oEmbedProvider("slideshare", "rich", ["slideshare\.net"], "//www.slideshare.net/api/oembed/2", {format: 'jsonp'}),
+        new oEmbedProvider("slideshare", "rich", ["slideshare\.net"], "https://www.slideshare.net/api/oembed/2", {format: 'jsonp'}),
         new oEmbedProvider("roomsharejp", "rich", ["roomshare\\.jp/(en/)?post/.*"], "http://roomshare.jp/oembed.json"),
         new oEmbedProvider("lanyard", "rich", ["lanyrd.com/\\d+/.+"], null,
             {
@@ -446,7 +446,7 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
         new oEmbedProvider("opengraph", "rich", [".*"], null,
             {
                 yql: {
-                    xpath: "//meta|//title|//link",
+                    xpath: "https://meta|//title|//link",
                     from: 'html',
                     datareturn: function (results) {
                         if (!results['og:title'] && results['title'] && results['description'])
