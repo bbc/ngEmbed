@@ -19,10 +19,11 @@ describe('EmbedTagService', function () {
     it('should attempt to resolve short urls', function(done) {
 
         var shortUrl = 'https://flic.kr/p/q7E1Qg';
+        var settings = {};
         $httpBackend.expectJSONP('http://api.longurl.org/v2/expand?callback=JSON_CALLBACK&format=json&url=https:%2F%2Fflic.kr%2Fp%2Fq7E1Qg').respond(200, {
             'long-url': 'this is a long url'
         });
-        longifyService.longify(shortUrl).then(function(data) {
+        longifyService.longify(shortUrl, settings).then(function(data) {
             expect(data).toEqual('this is a long url');
             done();
         });

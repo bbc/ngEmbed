@@ -15,7 +15,7 @@ describe('ngEmbed', function() {
     describe('init', function() {
         it('should create the right model', function() {
             scope.model = {};
-            element = $compile('<ng-embed ng-model="model" embed-url="https://www.youtube.com/watch?v=TWfph3iNC-k"></ng-embed>')(scope);
+            element = $compile('<ng-embed ng-model="model" settings="{}" embed-url="https://www.youtube.com/watch?v=TWfph3iNC-k"></ng-embed>')(scope);
             element.isolateScope().$digest();
             expect(scope.model.originalUrl).toBeTruthy();
             expect(scope.model.longUrl).toBeTruthy();
@@ -48,7 +48,7 @@ describe('ngEmbed', function() {
 
         it('should create the right model', function() {
             scope.model = {};
-            element = $compile('<ng-embed ng-model="model" embed-url="https://vine.co/v/OHhMKX7Hd0q"></ng-embed>')(scope);
+            element = $compile('<ng-embed ng-model="model" settings="{}" embed-url="https://vine.co/v/OHhMKX7Hd0q"></ng-embed>')(scope);
             element.isolateScope().$digest();
             expect(scope.model.originalUrl).toBeTruthy();
             expect(scope.model.longUrl).toBeTruthy();
