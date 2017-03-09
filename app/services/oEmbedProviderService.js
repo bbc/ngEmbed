@@ -1,7 +1,7 @@
 function oEmbedProviderService(templateProviderService, yqlProviderService, apiProviderService, embedTagService, oEmbedProvider) {
     'use strict';
 
-    var facebokScriptHasBeenAdded;
+    var facebookScriptHasBeenAdded;
     var settings = {};
     var providers = [
 
@@ -304,13 +304,15 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
             , {templateRegex: /.*\/([^\/]+)\/([^\/]+).*/,
                 template: function (url) {
                     // adding script directly to DOM to make sure that it is loaded correctly.
-                    if (!facebokScriptHasBeenAdded) {
+                    if (!facebookScriptHasBeenAdded) {
                         document.body.appendChild(angular.element('<div id="fb-root"></div>')[0]);
                         var script = document.createElement('script');
                         script.type = 'text/javascript';
                         script.text = '(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js = d.createElement(s); js.id = id;js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";fjs.parentNode.insertBefore(js, fjs);}(document, "script", "facebook-jssdk"));';
                         document.body.appendChild(script);
-                        facebokScriptHasBeenAdded = true;
+                        facebookScriptHasBeenAdded = true;
+                    } else {
+                      setTimeout(function() { window.FB.XFBML.parse(); }, 0);
                     }
 
                     // returning template with url of facebook post.
@@ -318,30 +320,6 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
 
                 }
             }),
-        /*
-         // Saving old implementation of Facebook in case we will need it as example in the future.
-         new oEmbedProvider("facebook", "rich", ["facebook.com/(people/[^\\/]+/\\d+|[^\\/]+$)"], "https://graph.facebook.com/$2$3/?callback=?"
-         ,{templateRegex:/.*facebook.com\/(people\/[^\/]+\/(\d+).*|([^\/]+$))/,
-         templateData : function(data){ if(!data.id)return false;
-         var out =  '<div class="oembedall-facebook1"><div class="oembedall-facebook2"><a href="http://www.facebook.com/">facebook</a> ';
-         if(data.from) out += '<a href="http://www.facebook.com/'+data.from.id+'">'+data.from.name+'</a>';
-         else if(data.link) out += '<a href="'+data.link+'">'+data.name+'</a>';
-         else if(data.username) out += '<a href="http://www.facebook.com/'+data.username+'">'+data.name+'</a>';
-         else out += '<a href="http://www.facebook.com/'+data.id+'">'+data.name+'</a>';
-         out += '</div><div class="oembedall-facebookBody"><div class="contents">';
-         if(data.picture) out += '<a href="'+data.link+'"><img src="'+data.picture+'"></a>';
-         else out += '<img src="https://graph.facebook.com/'+data.id+'/picture">';
-         if(data.from) out += '<a href="'+data.link+'">'+data.name+'</a>';
-         if(data.founded) out += 'Founded: <strong>'+data.founded+'</strong><br>';
-         if(data.category) out += 'Category: <strong>'+data.category+'</strong><br>';
-         if(data.website) out += 'Website: <strong><a href="'+data.website+'">'+data.website+'</a></strong><br>';
-         if(data.gender) out += 'Gender: <strong>'+data.gender+'</strong><br>';
-         if(data.description) out += data.description + '<br>';
-         out += '</div></div>';
-         return out;
-         }
-         }),
-         */
         new oEmbedProvider("stackoverflow", "rich", ["stackoverflow.com/questions/[\\d]+"], "http://api.stackoverflow.com/1.1/questions/$1?body=true&jsonp=?"
             , {templateRegex: /.*questions\/([\d]+).*/,
                 templateData: function (data) {
