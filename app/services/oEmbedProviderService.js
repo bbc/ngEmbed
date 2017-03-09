@@ -312,7 +312,12 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
                         document.body.appendChild(script);
                         facebookScriptHasBeenAdded = true;
                     } else {
-                      setTimeout(function() { window.FB.XFBML.parse(); }, 0);
+                      setTimeout(function() {
+                        // facebook script has been added, so window.FB should exist, but defensive
+                        if (window.FB && window.FB.XFBML && typeof window.FB.XFBML.parse === 'function') {
+                          window.FB.XFBML.parse();
+                        }
+                      }, 0);
                     }
 
                     // returning template with url of facebook post.
