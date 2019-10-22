@@ -8,6 +8,7 @@ function TemplateServiceProvider(BaseService, $q) {
     TemplateService.prototype = new BaseService;
     TemplateService.prototype.getEmbed = function (externalUrl, embedProvider, settings) {
         return function () {
+            console.log('here');
             var deferred = $q.defer();
             if (embedProvider.apiendpoint) {
                 //Add APIkey if true
@@ -18,9 +19,10 @@ function TemplateServiceProvider(BaseService, $q) {
                     params: {
                         callback: 'JSON_CALLBACK'
                     }
-                }).success(function (data) {
+                }).then(function (data) {
+
                     deferred.resolve(embedProvider.templateData(data));
-                }).error(function (data, status, headers, config) {
+                }).catch(function (data, status, headers, config) {
                     deferred.reject({
                         data: data,
                         status: status,

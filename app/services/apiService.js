@@ -86,7 +86,7 @@ function APIServiceProvider(BaseService, $q) {
             var params = {};
             params[_callbackParamName] = "JSON_CALLBACK";
             this.$http.jsonp(requestUrl, {
-                params: params}).success(function (data) {
+                params: params}).then(function (data) {
                 var oembedData = angular.copy(data);
                 switch (oembedData.type) {
                     case "file": //Deviant Art has this
@@ -102,7 +102,7 @@ function APIServiceProvider(BaseService, $q) {
                         break;
                 }
                 deferred.resolve(oembedData.code);
-            }).error(function(data, status, headers, config) {
+            }).catch(function(data, status, headers, config) {
                 deferred.reject({
                     data: data,
                     status: status,

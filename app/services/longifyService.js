@@ -56,9 +56,9 @@ function LongifyServiceProvider(BaseService, $q) {
                                 url: resourceURL,
                                 format: "json"
                             }
-                        }).success(function (data) {
+                        }).then(function (data) {
                             defer.resolve(data['long-url']);
-                        }).error(function (data, status, headers, config) {
+                        }).catch(function (data, status, headers, config) {
                             defer.reject({
                                 data: data,
                                 status: status,
