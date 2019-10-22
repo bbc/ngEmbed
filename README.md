@@ -2,6 +2,8 @@
 
 An angular module based on the jquery library https://github.com/nfl/jquery-oembed-all
 
+This is now compatible with Angular 1.6
+
 ## Getting started
 
 * Clone the repo
