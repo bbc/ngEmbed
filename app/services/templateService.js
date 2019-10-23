@@ -8,7 +8,6 @@ function TemplateServiceProvider(BaseService, $q) {
     TemplateService.prototype = new BaseService;
     TemplateService.prototype.getEmbed = function (externalUrl, embedProvider, settings) {
         return function () {
-            console.log('here');
             var deferred = $q.defer();
             if (embedProvider.apiendpoint) {
                 //Add APIkey if true

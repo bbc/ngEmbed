@@ -267,7 +267,7 @@ function APIServiceProvider(BaseService, $q) {
             var params = {};
             params[_callbackParamName] = "JSON_CALLBACK";
             this.$http.jsonp(requestUrl, {
-                params: params}).success(function (data) {
+                params: params}).then(function (data) {
                 var oembedData = angular.copy(data);
                 switch (oembedData.type) {
                     case "file": //Deviant Art has this
@@ -283,7 +283,7 @@ function APIServiceProvider(BaseService, $q) {
                         break;
                 }
                 deferred.resolve(oembedData.code);
-            }).error(function(data, status, headers, config) {
+            }).catch(function(data, status, headers, config) {
                 deferred.reject({
                     data: data,
                     status: status,
@@ -425,9 +425,9 @@ function LongifyServiceProvider(BaseService, $q) {
                                 url: resourceURL,
                                 format: "json"
                             }
-                        }).success(function (data) {
+                        }).then(function (data) {
                             defer.resolve(data['long-url']);
-                        }).error(function (data, status, headers, config) {
+                        }).catch(function (data, status, headers, config) {
                             defer.reject({
                                 data: data,
                                 status: status,
@@ -1001,9 +1001,10 @@ function TemplateServiceProvider(BaseService, $q) {
                     params: {
                         callback: 'JSON_CALLBACK'
                     }
-                }).success(function (data) {
+                }).then(function (data) {
+
                     deferred.resolve(embedProvider.templateData(data));
-                }).error(function (data, status, headers, config) {
+                }).catch(function (data, status, headers, config) {
                     deferred.reject({
                         data: data,
                         status: status,
@@ -1054,7 +1055,7 @@ function YQLServiceProvider(BaseService, $q) {
                     format: "json",
                     env: 'store://datatables.org/alltableswithkeys',
                     callback: "JSON_CALLBACK"
-                }}).success(function (data) {
+                }}).then(function (data) {
                 var result;
 
                 if (embedProvider.yql.xpath && embedProvider.yql.xpath == '//meta|//title|//link') {
@@ -1095,7 +1096,7 @@ function YQLServiceProvider(BaseService, $q) {
                 }
                 if (result === false)return;
                 deferred.resolve(result[0].outerHTML);
-            }).error(function (e) {
+            }).catch(function (e) {
                 deferred.reject(e);
             });
 
