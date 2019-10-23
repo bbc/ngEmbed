@@ -22,7 +22,7 @@ function YQLServiceProvider(BaseService, $q) {
                     format: "json",
                     env: 'store://datatables.org/alltableswithkeys',
                     callback: "JSON_CALLBACK"
-                }}).success(function (data) {
+                }}).then(function (data) {
                 var result;
 
                 if (embedProvider.yql.xpath && embedProvider.yql.xpath == '//meta|//title|//link') {
@@ -63,7 +63,7 @@ function YQLServiceProvider(BaseService, $q) {
                 }
                 if (result === false)return;
                 deferred.resolve(result[0].outerHTML);
-            }).error(function (e) {
+            }).catch(function (e) {
                 deferred.reject(e);
             });
 
