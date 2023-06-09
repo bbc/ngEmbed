@@ -581,7 +581,7 @@ function oEmbedProviderService(templateProviderService, yqlProviderService, apiP
                 templateRegex: /https?:\/\/w?w?w?.?instagram\.com\/p\/(.*)/,
                 template: function (url, param) {
                     param = param.match(/^([^?\/?]+)/)[1];
-                    return '<iframe src="https://instagram.com/p/'+param+'/embed/?v=4" allowfullscreen="true" allowscriptaccess="always" scrolling="no" frameborder="0"></iframe>'
+                    return '<iframe src="https://www.instagram.com/p/'+param+'/embed/?v=4" allowfullscreen="true" allowscriptaccess="always" scrolling="no" frameborder="0"></iframe>'
                 },
                 nocache: 1
             }),
